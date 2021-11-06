@@ -1,53 +1,51 @@
-import React from "react"
+import React, {useEffect, useState } from "react"
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
+console.log(`Google api key: ${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`)
 const MyMapComponent = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAn4zNsNjzHhCUpKnIGlAaCLOPqQCGwEtM`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
   withScriptjs,
   withGoogleMap
-)((props) =>
+)(({latitude, longitude, isMarkerShown, onMarkerClick}) =>
   <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: props.latitude, lng: props.longitude }}
+    defaultZoom={16}
+    defaultCenter={{ lat: latitude, lng: longitude }}
   >
-    {props.isMarkerShown && <Marker position={{ lat: props.latitude, lng: props.longitude }} onClick={props.onMarkerClick} />}
+    {isMarkerShown && <Marker position={{ lat: latitude, lng: longitude }} onClick={onMarkerClick} />}
   </GoogleMap>
 )
 
-export class MyFancyComponent extends React.PureComponent {
-  state = {
-    isMarkerShown: false,
-  }
-
-  componentDidMount() {
-    this.delayedShowMarker()
-  }
-
-  delayedShowMarker = () => {
+export function MyFancyComponent(props) {
+  const [isMarkerShown, setIsMarkerShown] = useState(false);
+  
+  const delayedShowMarker = () => {
     setTimeout(() => {
-      this.setState({ isMarkerShown: true })
+      setIsMarkerShown(true);
     }, 3000)
   }
 
-  handleMarkerClick = () => {
-    this.setState({ isMarkerShown: false })
-    this.delayedShowMarker()
+  useEffect(() => {
+    delayedShowMarker();
+  }, []);
+
+
+  const handleMarkerClick = () => {
+    setIsMarkerShown(false);
+    delayedShowMarker()
   }
 
-  render() {
-    return (
-      <MyMapComponent
-        isMarkerShown={this.state.isMarkerShown}
-        latitude={this.props.latitude}
-        longitude={this.props.longitude}
-        onMarkerClick={this.handleMarkerClick}
-      />
-    )
-  }
+  return (
+    <MyMapComponent
+      isMarkerShown={isMarkerShown}
+      latitude={props.latitude}
+      longitude={props.longitude}
+      onMarkerClick={handleMarkerClick}
+    />
+  )
 }

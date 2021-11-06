@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import GoogleApiWrapper from './components/map-component';
+import { MyFancyComponent } from './components/map-component';
 import './App.css';
 
 export function App() {
@@ -25,7 +25,7 @@ export function App() {
 
   return (
     <div>
-      <GoogleApiWrapper latitude={latitude} longitude={longitude} />
+      <MyFancyComponent latitude={latitude} longitude={longitude} />
     </div>
   );
 }

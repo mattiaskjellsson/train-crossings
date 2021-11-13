@@ -10,6 +10,10 @@ function MapComponent({google, latitude, longitude, zoom, distance}) {
     setCrossings(getCloseCrossings(distance, latitude, longitude));
   }, [distance, latitude, longitude]);
 
+  useEffect(() => {
+    console.log(`crossings: ${JSON.stringify(crossings)}`);
+  }, [crossings]);
+
   const getCloseCrossings = (distance, latitude, longitude) => {
     const closeCrossings = crossingsFetcher(latitude, longitude, distance);
     return closeCrossings;

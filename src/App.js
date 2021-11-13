@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MyFancyComponent } from './components/map-component';
+import GoogleMapWrapper from './components/map-component';
 import './App.css';
 
 export function App() {
@@ -8,10 +8,7 @@ export function App() {
 
   useEffect(() => {
     if ("geolocation" in navigator) {
-      console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
       navigator.geolocation.watchPosition((position) => {
-        console.log("Latitude is :", position.coords.latitude);
-        console.log("Longitude is :", position.coords.longitude);
         setLongitude(position.coords.longitude);
         setLatitude(position.coords.latitude);
       }, (error) => {
@@ -25,7 +22,7 @@ export function App() {
 
   return (
     <div>
-      <MyFancyComponent latitude={latitude} longitude={longitude} />
+      <GoogleMapWrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} zoom={16} latitude={latitude} longitude={longitude} />
     </div>
   );
 }

@@ -22,7 +22,13 @@ export function App() {
 
   return (
     <div>
-      <GoogleMapWrapper apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} zoom={16} latitude={latitude} longitude={longitude} />
+      <GoogleMapWrapper 
+        apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} 
+        zoom={16} 
+        latitude={latitude} 
+        longitude={longitude} 
+        distance={0.5}
+      />
     </div>
   );
 }

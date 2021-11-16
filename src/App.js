@@ -27,7 +27,7 @@ export function App() {
         zoom={16} 
         latitude={latitude} 
         longitude={longitude} 
-        distance={0.5}
+        distance={0.75}
       />
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
-import vector from '../assets/my_location.png';
+import locationImage from '../assets/my_location.png';
+import crossingImage from '../assets/crossing.png';
 import { crossingsFetcher } from '../api/crossings-fetcher';
 
 function MapComponent({google, latitude, longitude, zoom, distance}) {
@@ -30,7 +31,7 @@ function MapComponent({google, latitude, longitude, zoom, distance}) {
       >
         <Marker key="marker_1"
           icon={{
-            url: vector,
+            url: locationImage,
             scaledSize: new google.maps.Size(20, 20),
           }}
           position={{
@@ -41,6 +42,10 @@ function MapComponent({google, latitude, longitude, zoom, distance}) {
 
         {
           crossings.map((x, i) => <Marker key={'marker_'+ i}
+            icon={{
+              url: crossingImage,
+              scaledSize: new google.maps.Size(20, 35),
+            }}
             position={{
               lat: x.lat,
               lng: x.lng,
